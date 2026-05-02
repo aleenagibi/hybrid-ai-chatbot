@@ -1,6 +1,6 @@
-# 🤖 Hybrid AI System (LLM + RAG + API + Router)
+# Hybrid AI System (LLM + RAG + API + Router)
 
-## 🧠 What this is
+## What this is
 
 This project is not just a chatbot.
 
@@ -13,7 +13,7 @@ It is a **hybrid AI system** that dynamically decides how to respond using:
 
 ---
 
-## 🎯 Why this matters
+## Why this matters
 
 Most student projects:
 
@@ -26,7 +26,7 @@ This system demonstrates how **real-world AI assistants are built**:
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
 ```text id="arch1"
 User → UI → FastAPI Backend
@@ -43,7 +43,7 @@ User → UI → FastAPI Backend
 
 ---
 
-## 🔍 How it works
+## How it works
 
 ### 1. User Query
 
@@ -81,7 +81,7 @@ Final output is returned with a **source label**:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text id="arch2"
 Chatbot/
@@ -96,7 +96,7 @@ Chatbot/
 
 ---
 
-## 🧪 Example Queries
+## Example Queries
 
 | Query                       | Path |
 | --------------------------- | ---- |
@@ -106,7 +106,7 @@ Chatbot/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Backend**
 
@@ -124,7 +124,7 @@ Chatbot/
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 ```bash id="run1"
 python -m venv venv
@@ -141,7 +141,7 @@ frontend/index.html
 
 ---
 
-## 📌 Key Concepts Demonstrated
+## Key Concepts Demonstrated
 
 * Retrieval-Augmented Generation (RAG)
 * AI system routing
@@ -150,7 +150,7 @@ frontend/index.html
 
 ---
 
-## 🔄 Current Stage
+## Current Stage
 
 ✔️ Phase 1 complete:
 
@@ -160,7 +160,7 @@ frontend/index.html
 
 ---
 
-## 🚀 Next (Phase 2)
+## Next (Phase 2)
 
 * Modular AI system (domain-based modules)
 * Decision engine (structured outputs)
