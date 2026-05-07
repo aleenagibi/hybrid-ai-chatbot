@@ -5,8 +5,13 @@ import os
 from dotenv import load_dotenv
 from rag.rag import search
 from api.tools import get_user_data
-from router import route_query
+# from router import route_query
+from semantic_router import semantic_route
 from fastapi.middleware.cors import CORSMiddleware
+from modules.career import handle_career
+from modules.wellbeing import handle_wellbeing
+from modules.general import handle_general
+from decision_engine import generate_decision
 
 # Load environment variables
 load_dotenv()
@@ -40,48 +45,30 @@ def home():
 # Chat endpoint
 @app.post("/chat")
 def chat(query: Query):
+
     try:
-        route = route_query(query.question)
 
-        if route == "api":
-            data = get_user_data()
-            return {"response": data, "source": "API"}
+        # route = route_query(query.question)
+        route = semantic_route(query.question)
 
-        elif route == "rag":
-            context = search(query.question)
+        # Module selection
+        if route == "career":
+            result = handle_career(query.question)
 
-            response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": f"""
-You are a helpful assistant.
-
-Use ONLY the provided context to answer the question.
-Do NOT add extra information.
-If the answer is not in the context, say "Not found in document".
-
-Context:
-{context}
-""",
-                    },
-                    {"role": "user", "content": query.question},
-                ],
-            )
-
-            return {"response": response.choices[0].message.content, "source": "RAG"}
+        elif route == "wellbeing":
+            result = handle_wellbeing(query.question)
 
         else:
-            response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": query.question},
-                ],
-            )
+            result = handle_general(query.question)
 
-            return {"response": response.choices[0].message.content, "source": "LLM"}
+        # Decision engine
+        print("ROUTE:", route)
+        final_output = generate_decision(route, result)
+
+        return final_output
 
     except Exception as e:
-        return {"error": str(e)}
+
+        return {
+            "error": str(e)
+        }

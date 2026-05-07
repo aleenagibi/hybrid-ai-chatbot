@@ -57,11 +57,60 @@ async function sendMessage() {
 
         loading.remove();
 
-        if (data.error) {
-            addMessage(data.error, "bot");
-        } else {
-            addMessage(data.response, "bot", data.source);
+if (data.error) {
+
+    addMessage(data.error, "bot");
+
+} else {
+
+    let formattedResponse = "";
+
+    // Structured Phase 2 response
+    if (data.type) {
+
+        formattedResponse += `<b>Type:</b> ${data.type}<br><br>`;
+
+        if (data.analysis) {
+            formattedResponse += `
+                <b>Analysis:</b><br>
+                ${data.analysis}<br><br>
+            `;
         }
+
+        if (data.recommendations) {
+
+            formattedResponse += `<b>Recommendations:</b><ul>`;
+
+            data.recommendations.forEach(item => {
+                formattedResponse += `<li>${String(item)}</li>`;
+            });
+
+            formattedResponse += `</ul><br>`;
+        }
+
+        if (data.next_action) {
+            formattedResponse += `
+                <b>Next Action:</b><br>
+                ${data.next_action}<br><br>
+            `;
+        }
+
+        if (data.priority) {
+            formattedResponse += `
+                <b>Priority:</b> ${data.priority}
+            `;
+        }
+
+    }
+
+    // General module fallback
+    else if (data.response) {
+
+        formattedResponse = data.response;
+    }
+
+    addMessage(formattedResponse, "bot", data.type || "AI");
+}
 
     } catch {
         loading.remove();
